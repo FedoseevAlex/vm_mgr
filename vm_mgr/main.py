@@ -1,5 +1,3 @@
-from typing import Dict
-
 from flask import Flask
 from requests import request, Response
 
@@ -7,7 +5,6 @@ app = Flask(__name__)
 app.config.from_pyfile("config.py")
 
 
-@app.route("/auth", methods=["POST"])
 def authentication() -> Response:
     """
     Authenticate itself to devstack
