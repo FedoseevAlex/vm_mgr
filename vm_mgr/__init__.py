@@ -1,1 +1,1 @@
-from vm_mgr.main import *
+from vm_mgr.routes import *
