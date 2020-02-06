@@ -6,17 +6,20 @@ This tool allow you to create and show virtual machine instances.
 Also there is a possibility to get information about devstack flavors and images.
 
 ### Installation and running
-1. Clone the repo
-`https://github.com/FedoseevAlex/vm_mgr.git`
+1. Clone the repo  
+`https://github.com/FedoseevAlex/vm_mgr.git` 
+
 2. Install package
-`pip install --user vm_mgr`
-3. Set the environment variables for authentication
-   `AUTH_NAME` - name to authenticate to devstack
-   `AUTH_PASSWORD`- password for devstack authentication
-   `SERVER_IP`- IPv4 address of devstack
-   `FLASK_APP` - Path to `vm_mgr/vm_mgr/application.py`
-4. Run with
-`flask run -h 0.0.0.0`
+`pip install --user vm_mgr`  
+
+3. Set the environment variables for authentication  
+   `AUTH_NAME` - name to authenticate to devstack  
+   `AUTH_PASSWORD`- password for devstack authentication  
+   `SERVER_IP`- IPv4 address of devstack  
+   `FLASK_APP` - Path to `vm_mgr/vm_mgr/application.py`  
+   
+4. Run with   
+`flask run -h 0.0.0.0`  
 
 ### Request examples
   
