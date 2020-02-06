@@ -3,8 +3,9 @@ import os
 
 SERVER = f"http://{os.environ.get('SERVER_IP')}"
 
-AUTH_REF = f"{SERVER}/identity/v3/auth/tokens"
-AUTH_BODY = {
+ADMIN_PROJECT_ID = "21f230e839624efc965c9008128fa194"
+TOKEN_REF = f"{SERVER}/identity/v3/auth/tokens"
+TOKEN_BODY = {
     "auth": {
         "identity": {
             "methods": ["password"],
@@ -15,9 +16,11 @@ AUTH_BODY = {
                     "password": os.environ.get("AUTH_PASSWORD"),
                 }
             },
-        }
+        },
+        "scope": {"project": {"id": ADMIN_PROJECT_ID}},
     }
 }
+
 
 COMPUTE_REF = f"{SERVER}/compute/v2.1"
 
@@ -25,11 +28,10 @@ COMPUTE_SERVERS_REF = f"{COMPUTE_REF}/servers"
 COMPUTE_CREATE = {
     "server": {
         "name": "auto-allocate-network",
-        "imageRef": None,
-        "flavorRef": None,
+        "imageRef": "7d3d733d-2b2d-4a8f-a7f6-d607710c9656",
+        "flavorRef": 42,
         "networks": [
             {"uuid": "7eebd447-b45c-4b82-8b1f-5fce8d3330c0"},
-            {"uuid": "daae5675-6e78-4251-a17b-5b1c604b5eb2"},
         ],
     }
 }

@@ -12,18 +12,10 @@ def greetings():
     return "Hello, User! If you need help go /vmmgr/help"
 
 
-@app.route("/vmmgr/help")
-@app.route("/vmmgr/usage")
-def get_help():
-    """
-    Prints some simple usage info
-    """
-
-
 @app.route("/vmmgr/servers", methods=["GET"])
 def show_instances():
     """
-    Get currently runnining instances.
+    Get currently running instances.
     According to test task this function will return
     a list of instances in "ACTIVE" state.
     In addition instace IPv4 adresses will be added to response.
@@ -32,11 +24,13 @@ def show_instances():
 
 
 @app.route("/vmmgr/servers", methods=["POST"])
-def launch_instances():
+def make_instances():
     """
     Create virtual machines.
     """
-    return create_instances()
+    body = request.json
+    return create_instances(flavor=body.get('flavor'), name=body.get('name'))
+
 
 @app.route("/vmmgr/flavors", methods=["GET"])
 def show_flavors():
@@ -45,12 +39,30 @@ def show_flavors():
     """
     return get_flavors()
 
+
 @app.route("/vmmgr/images", methods=["GET"])
 def show_image_ref():
     """
     Show all available images
     """
     return get_image_ref()
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    """
+    Internal server error handler
+    """
+    return f'{"code": 500, "message": "{str(error)}"}', 500
+
+
+@app.errorhandler(403)
+def forbidden(error):
+    """
+    Forbidden error handler
+    """
+    return f'{"code": 403, "message": "Not found"}', 403
+
 
 @app.errorhandler(404)
 def not_found(error):
