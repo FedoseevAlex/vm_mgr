@@ -16,7 +16,7 @@ Also there is a possibility to get information about devstack flavors and images
    `AUTH_NAME` - name to authenticate to devstack  
    `AUTH_PASSWORD`- password for devstack authentication  
    `SERVER_IP`- IPv4 address of devstack  
-   `FLASK_APP` - Path to `vm_mgr/vm_mgr/application.py`  
+   `FLASK_APP` - Set to `vm_mgr`  
    
 4. Run with   
 `flask run -h 0.0.0.0`  
