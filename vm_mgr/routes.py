@@ -9,7 +9,7 @@ def greetings():
     """
     Greetings to user
     """
-    return "Hello, User! If you need help go /vmmgr/help"
+    return {"message": "Hello, User! If you need help go /vmmgr/help"}
 
 
 @app.route("/vmmgr/servers", methods=["GET"])
@@ -27,15 +27,18 @@ def show_instances():
 def make_instances():
     """
     Create virtual machines.
+    Request body may contain fields "flavor" and "name".
+    Flavor field specify preset configuration for virtual machine.
+    Name field allow user specify instance name via request body.
     """
     body = request.json
-    return create_instances(flavor=body.get('flavor'), name=body.get('name'))
+    return create_instances(flavor=body.get("flavor"), name=body.get("name"))
 
 
 @app.route("/vmmgr/flavors", methods=["GET"])
 def show_flavors():
     """
-    Show all available flavors
+    Show all available flavors in devstack.
     """
     return get_flavors()
 
@@ -43,7 +46,7 @@ def show_flavors():
 @app.route("/vmmgr/images", methods=["GET"])
 def show_image_ref():
     """
-    Show all available images
+    Show all available images to load vm from.
     """
     return get_image_ref()
 
