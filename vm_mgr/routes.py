@@ -1,7 +1,7 @@
 from flask import request
 
 from vm_mgr.application import app
-from vm_mgr.requests import get_flavors, get_instances, get_image_ref
+from vm_mgr.requests import get_flavors, get_instances, get_image_ref, create_instances
 
 
 @app.route("/vmmgr")
@@ -32,10 +32,11 @@ def show_instances():
 
 
 @app.route("/vmmgr/servers", methods=["POST"])
-def create_instances():
+def launch_instances():
     """
     Create virtual machines.
     """
+    return create_instances()
 
 @app.route("/vmmgr/flavors", methods=["GET"])
 def show_flavors():
@@ -57,4 +58,4 @@ def not_found(error):
     This function handles a situation when requested route is
     absent.
     """
-    return f'{"Error code": 404, "error": "{str(error)}"}', 404
+    return f'{"code": 404, "message": "Not found"}', 404

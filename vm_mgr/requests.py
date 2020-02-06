@@ -46,12 +46,21 @@ def create_instances():
 
     :param options: Container for additional settings for virtual machines
     """
+    body = app.config["COMPUTE_CREATE"].copy()
+    body["server"]["imageRef"] = get_image_ref()
+    body["server"]["flavorRef"] = find_nano_flavor(get_flavors())
+
     create_rq = request(
         method="POST",
-        url=app.config["COMPUTE_REF"],
+        url=app.config["COMPUTE_SERVERS_REF"],
         headers=build_header(),
-        json=app.config["COMPUTE_LIST"],
+        json=body,
     )
+    print(body)
+    if not create_rq.ok:
+        raise HTTPError(f"Unable to create VM instances: {create_rq.status_code} {create_rq.json()}")
+
+    return create_rq.json()
 
 
 def get_image_ref():
@@ -64,7 +73,9 @@ def get_image_ref():
     if not images_rq.ok:
         HTTPError(f"Can not get image id for virtual machine: {images_rq.status_code}")
 
-    return images_rq.json()
+    [image] = images_rq.json()['images']
+    return image['id']
+
 
 def get_flavors():
     """
@@ -84,7 +95,7 @@ def find_nano_flavor(flavors):
     """
     Find m1.nano flavor id
     """
-    for flavor in flavors:
+    for flavor in flavors["flavors"]:
         if 'm1.nano' == flavor["name"]:
             return flavor["id"]
 

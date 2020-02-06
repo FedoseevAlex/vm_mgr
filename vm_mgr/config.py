@@ -23,11 +23,15 @@ COMPUTE_REF = f"{SERVER}/compute/v2.1"
 
 COMPUTE_SERVERS_REF = f"{COMPUTE_REF}/servers"
 COMPUTE_CREATE = {
-    "accessIPv4": None,
-    "name": None,
-    "imageRef": None,
-    "flavorRef": None,
-    "networks": "auto",
+    "server": {
+        "name": "auto-allocate-network",
+        "imageRef": None,
+        "flavorRef": None,
+        "networks": [
+            {"uuid": "7eebd447-b45c-4b82-8b1f-5fce8d3330c0"},
+            {"uuid": "daae5675-6e78-4251-a17b-5b1c604b5eb2"},
+        ],
+    }
 }
 
 COMPUTE_LIST = {
