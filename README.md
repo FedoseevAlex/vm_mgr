@@ -26,7 +26,7 @@ Also there is a possibility to get information about devstack flavors and images
 #### Create virtual machine instance 
 ```
 curl --request POST \
-  --url http://92.53.102.98:5000/vmmgr/servers \
+  --url http://<server_ip>:5000/vmmgr/servers \
   --header 'content-type: application/json' \
   --data '{"flavor": "m1.micro",
  "name": "MicroVM"}'
@@ -40,11 +40,11 @@ curl --request POST \
     "id": "f016783d-aa01-40ba-af3c-fe1a307fd3cb",
     "links": [
       {
-        "href": "http://92.53.102.98/compute/v2.1/servers/f016783d-aa01-40ba-af3c-fe1a307fd3cb",
+        "href": "http://<server_ip>/compute/v2.1/servers/f016783d-aa01-40ba-af3c-fe1a307fd3cb",
         "rel": "self"
       },
       {
-        "href": "http://92.53.102.98/compute/servers/f016783d-aa01-40ba-af3c-fe1a307fd3cb",
+        "href": "http://<server_ip>/compute/servers/f016783d-aa01-40ba-af3c-fe1a307fd3cb",
         "rel": "bookmark"
       }
     ],
@@ -59,7 +59,7 @@ curl --request POST \
  
 #### Get available flavors 
 ```
-curl --request GET --url http://92.53.102.98:5000/vmmgr/flavors
+curl --request GET --url http://<server_ip>:5000/vmmgr/flavors
 ```
 
 **Response example:**
@@ -72,11 +72,11 @@ curl --request GET --url http://92.53.102.98:5000/vmmgr/flavors
       "links": [
         {
           "rel": "self",
-          "href": "http://92.53.102.98/compute/v2.1/flavors/1"
+          "href": "http://<server_ip>/compute/v2.1/flavors/1"
         },
         {
           "rel": "bookmark",
-          "href": "http://92.53.102.98/compute/flavors/1"
+          "href": "http://<server_ip>/compute/flavors/1"
         }
       ]
     },
@@ -86,11 +86,11 @@ curl --request GET --url http://92.53.102.98:5000/vmmgr/flavors
       "links": [
         {
           "rel": "self",
-          "href": "http://92.53.102.98/compute/v2.1/flavors/2"
+          "href": "http://<server_ip>/compute/v2.1/flavors/2"
         },
         {
           "rel": "bookmark",
-          "href": "http://92.53.102.98/compute/flavors/2"
+          "href": "http://<server_ip>/compute/flavors/2"
         }
       ]
     },
@@ -100,11 +100,11 @@ curl --request GET --url http://92.53.102.98:5000/vmmgr/flavors
       "links": [
         {
           "rel": "self",
-          "href": "http://92.53.102.98/compute/v2.1/flavors/42"
+          "href": "http://<server_ip>/compute/v2.1/flavors/42"
         },
         {
           "rel": "bookmark",
-          "href": "http://92.53.102.98/compute/flavors/42"
+          "href": "http://<server_ip>/compute/flavors/42"
         }
       ]
     }
@@ -115,7 +115,7 @@ curl --request GET --url http://92.53.102.98:5000/vmmgr/flavors
   
 #### Get all currently running virtual machines
 ```
-curl --request GET --url http://92.53.102.98:5000/vmmgr/servers
+curl --request GET --url http://<server_ip>:5000/vmmgr/servers
 ```
 **Response example:**
 ```
@@ -133,7 +133,7 @@ curl --request GET --url http://92.53.102.98:5000/vmmgr/servers
 
 #### Getting available images
 ```
-curl --request GET --url http://92.53.102.98:5000/vmmgr/images
+curl --request GET --url http://<server_ip>:5000/vmmgr/images
 ```
 **Response example:**
 ```
