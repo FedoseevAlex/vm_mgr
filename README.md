@@ -32,15 +32,15 @@ curl --request POST \
  "name": "MicroVM", "network_name": "shared"}'
 ```
 Request body could contain up to three parameters: name, flavor and network_name.
-- name: string 
+- **name**: string  
 User can specify desirable instance name through this parameter. 
 If this parameter is absent then random name will be generated.
 
-- flavor: string
+- **flavor**: string  
 This parameter is to specify preset instance configuration.
 Default is: m1.nano.
 
-- network_name: string
+- **network_name**: string  
 Specify network to connect instance to.
 Default: shared
 
