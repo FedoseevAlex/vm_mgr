@@ -28,7 +28,7 @@ COMPUTE_SERVERS_REF = f"{COMPUTE_REF}/servers"
 COMPUTE_CREATE = {
     "server": {
         "name": "auto-allocate-network",
-        "imageRef": "7d3d733d-2b2d-4a8f-a7f6-d607710c9656",
+        "imageRef": None,
         "flavorRef": 42,
         "networks": [{"uuid": "7eebd447-b45c-4b82-8b1f-5fce8d3330c0"},],
     }
