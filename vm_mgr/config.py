@@ -3,7 +3,6 @@ import os
 
 SERVER = f"http://{os.environ.get('SERVER_IP')}"
 
-ADMIN_PROJECT_ID = "21f230e839624efc965c9008128fa194"
 TOKEN_REF = f"{SERVER}/identity/v3/auth/tokens"
 TOKEN_BODY = {
     "auth": {
@@ -17,12 +16,13 @@ TOKEN_BODY = {
                 }
             },
         },
-        "scope": {"project": {"id": ADMIN_PROJECT_ID}},
     }
 }
 
+PROJECTS_REF = f"{SERVER}/identity/v3/auth/projects"
 
 COMPUTE_REF = f"{SERVER}/compute/v2.1"
+NETWORKS_REF = f"{SERVER}:9696/v2.0/networks"
 
 COMPUTE_SERVERS_REF = f"{COMPUTE_REF}/servers"
 COMPUTE_CREATE = {
@@ -30,7 +30,7 @@ COMPUTE_CREATE = {
         "name": "auto-allocate-network",
         "imageRef": None,
         "flavorRef": 42,
-        "networks": [{"uuid": "7eebd447-b45c-4b82-8b1f-5fce8d3330c0"},],
+        "networks": None,
     }
 }
 

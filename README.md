@@ -29,8 +29,21 @@ curl --request POST \
   --url http://<server_ip>:5000/vmmgr/servers \
   --header 'content-type: application/json' \
   --data '{"flavor": "m1.micro",
- "name": "MicroVM"}'
+ "name": "MicroVM", "network_name": "shared"}'
 ```
+Request body could contain up to three parameters: name, flavor and network_name.
+- name: string 
+User can specify desirable instance name through this parameter. 
+If this parameter is absent then random name will be generated.
+
+- flavor: string
+This parameter is to specify preset instance configuration.
+Default is: m1.nano.
+
+- network_name: string
+Specify network to connect instance to.
+Default: shared
+
 **Response example:**
 ```
 {
@@ -138,4 +151,48 @@ curl --request GET --url http://<server_ip>:5000/vmmgr/images
 **Response example:**
 ```
 7d3d733d-2b2d-4a8f-a7f6-d607710c9656
+```
+
+
+#### Get available networks
+```
+curl --request GET \
+  --url http://<server_ip>:5000/vmmgr/networks
+```
+
+**Response example:**
+```
+{
+  "networks": [
+    {
+      "admin_state_up": true,
+      "availability_zone_hints": [],
+      "availability_zones": [
+        "nova"
+      ],
+      "created_at": "2020-02-07T12:14:50Z",
+      "description": "",
+      "id": "dd25cd46-0cc3-4ff7-b420-53febca3128e",
+      "ipv4_address_scope": null,
+      "ipv6_address_scope": null,
+      "mtu": 1450,
+      "name": "shared",
+      "port_security_enabled": true,
+      "project_id": "620cf4fcfbcd4e7495a9664ab253efbd",
+      "provider:network_type": "vxlan",
+      "provider:physical_network": null,
+      "provider:segmentation_id": 13,
+      "revision_number": 2,
+      "router:external": false,
+      "shared": true,
+      "status": "ACTIVE",
+      "subnets": [
+        "0e049711-5a92-49df-b5c2-d77d31438037"
+      ],
+      "tags": [],
+      "tenant_id": "620cf4fcfbcd4e7495a9664ab253efbd",
+      "updated_at": "2020-02-07T12:14:52Z"
+    }
+  ]
+}
 ```
