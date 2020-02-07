@@ -11,18 +11,47 @@ def get_project_token() -> str:
     :return: Admin project token
     """
     body = app.config["TOKEN_BODY"].copy()
-    if app.config.get('ADMIN_PROJECT_ID') is None:
-        app.config['ADMIN_PROJECT_ID'] = get_admin_project_id()
+    if app.config.get("ADMIN_PROJECT_ID") is None:
+        app.config["ADMIN_PROJECT_ID"] = get_admin_project_id()
 
-    body['auth']['scope'] = {"project": {"id": app.config['ADMIN_PROJECT_ID']}}
+    body["auth"]["scope"] = {"project": {"id": app.config["ADMIN_PROJECT_ID"]}}
 
-    token_rq = request(
-        method="POST", url=app.config["TOKEN_REF"], json=body,
-    )
+    token_rq = request(method="POST", url=app.config["TOKEN_REF"], json=body,)
     if not token_rq.ok:
         raise HTTPError(token_rq.status_code)
 
     return token_rq.headers["X-Subject-Token"]
+
+
+def get_networks() -> dict:
+    """
+    Fetch all networks in devstack
+
+    :return: dictionary with networks specs
+    """
+    nets_rq = request(
+        method="GET", url=app.config["NETWORKS_REF"], headers=build_header()
+    )
+
+    if not nets_rq:
+        raise HTTPError(nets_rq.status_code)
+
+    return nets_rq.json()
+
+
+def get_network_id_by_name(name: str) -> str:
+    """
+    Find network id by it's name
+
+    :return: network id in devstack
+    """
+    networks_info = get_networks()
+
+    for network in networks_info["networks"]:
+        if network["name"] == name:
+            return network["id"]
+
+    raise AttributeError(f"No network named {name}")
 
 
 def get_admin_project_id() -> str:
@@ -39,18 +68,20 @@ def get_admin_project_id() -> str:
         raise HTTPError(token_rq.status_code)
 
     projects_rq = request(
-        method="GET", url=app.config["PROJECTS_REF"], headers=build_header(token_rq.headers["X-Subject-Token"])
+        method="GET",
+        url=app.config["PROJECTS_REF"],
+        headers=build_header(token_rq.headers["X-Subject-Token"]),
     )
     if not projects_rq.ok:
         raise HTTPError(projects_rq.status_code)
 
     admin_prj_id = None
-    for project in projects_rq.json()['projects']:
-        if project['name'] == 'admin':
-            admin_prj_id = project['id']
+    for project in projects_rq.json()["projects"]:
+        if project["name"] == "admin":
+            admin_prj_id = project["id"]
             break
     else:
-        raise ValueError('Admin project id not found')
+        raise ValueError("Admin project id not found")
 
     return admin_prj_id
 
@@ -59,7 +90,10 @@ def build_header(token: str = None):
     """
     Small function to build request header
     """
-    return {"Content-Type": "application/json", "X-Auth-Token": token or get_project_token()}
+    return {
+        "Content-Type": "application/json",
+        "X-Auth-Token": token or get_project_token(),
+    }
 
 
 def get_instances() -> dict:
@@ -87,7 +121,9 @@ def get_instances() -> dict:
     return answer
 
 
-def create_instances(flavor: str = None, name: str = None) -> dict:
+def create_instances(
+    flavor: str = None, name: str = None, network_name: str = None
+) -> dict:
     """
     Function to make a request to devstack for instance creation.
 
@@ -103,6 +139,9 @@ def create_instances(flavor: str = None, name: str = None) -> dict:
         name = str(uuid1())
 
     body["server"]["name"] = name
+    body["server"]["networks"] = [
+        {"uuid": get_network_id_by_name(network_name or "shared")}
+    ]
 
     create_rq = request(
         method="POST",

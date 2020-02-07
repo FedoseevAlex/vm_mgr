@@ -22,8 +22,6 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/FedoseevAlex/vm_mgr",
     packages=find_packages(),
-    classifiers=[
-        "Programming Language :: Python :: 3",
-    ],
+    classifiers=["Programming Language :: Python :: 3",],
     python_requires=">=3.6",
 )

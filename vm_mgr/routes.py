@@ -1,7 +1,13 @@
 from flask import request
 
 from vm_mgr.application import app
-from vm_mgr.requests import get_flavors, get_instances, get_image_ref, create_instances
+from vm_mgr.requests import (
+    get_flavors,
+    get_instances,
+    get_image_ref,
+    create_instances,
+    get_networks,
+)
 
 
 @app.route("/vmmgr")
@@ -49,6 +55,14 @@ def show_image_ref():
     Show all available images to load vm from.
     """
     return get_image_ref()
+
+
+@app.route("/vmmgr/networks", methods=["GET"])
+def show_networks():
+    """
+    Show all networks in devstack.
+    """
+    return get_networks()
 
 
 @app.errorhandler(500)

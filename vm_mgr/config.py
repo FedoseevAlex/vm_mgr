@@ -22,6 +22,7 @@ TOKEN_BODY = {
 PROJECTS_REF = f"{SERVER}/identity/v3/auth/projects"
 
 COMPUTE_REF = f"{SERVER}/compute/v2.1"
+NETWORKS_REF = f"{SERVER}:9696/v2.0/networks"
 
 COMPUTE_SERVERS_REF = f"{COMPUTE_REF}/servers"
 COMPUTE_CREATE = {
