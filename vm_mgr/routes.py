@@ -38,7 +38,11 @@ def make_instances():
     Name field allow user specify instance name via request body.
     """
     body = request.json
-    return create_instances(flavor=body.get("flavor"), name=body.get("name"))
+    return create_instances(
+        flavor=body.get("flavor"),
+        name=body.get("name"),
+        network_name=body.get("network_name"),
+    )
 
 
 @app.route("/vmmgr/flavors", methods=["GET"])
