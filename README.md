@@ -10,7 +10,7 @@ Also there is a possibility to get information about devstack flavors and images
 `https://github.com/FedoseevAlex/vm_mgr.git` 
 
 2. Install package
-`pip install --user vm_mgr`  
+`pip install --user ./vm_mgr`  
 
 3. Set the environment variables for authentication  
    `AUTH_NAME` - name to authenticate to devstack  
